@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- This file is for base html that is used for extending other html pages, sidebar is also located here-->
+
+<head>
+    {% block title %}<a href="/"><title>Canteen</title></a>{% endblock %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Search icon -->
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="main-header">
+            <a href="/"><h1>Canteen</h1></a>
+            
+        </div>
+    {% block content %}
+
+    {% endblock %}
+
+    <div class="footer">z
+        <span style="float:left">User: {{user.username}}</span>
+        <span style="float:center">IIS project</span>
+        <span style="float:right"><a href="mailto:xholko02@stud.fit.vutbr.cz" style="color:white">xholko02</a> <a href="mailto:xkremp01@stud.fit.vutbr.cz" style="color:white">xkremp01</a> <a href="mailto:xnovak2f@stud.fit.vutbr.cz" style="color:white">xnovak2f</a></span>
+    </div> <!-- End footer -->
+</body>
+</html>
