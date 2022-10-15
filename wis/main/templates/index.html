@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- End main-header -->
+
+{% load static %}
+
+<div class="search-header">
+    <h2 class="page-title">All facilities</h2>
+    <form class="search-bar" action="{% url 'search' %}">
+        <button type="submit"><i class="fa fa-search"></i></button>              
+        <input type="text" placeholder="Search..." style="margin-bottom: 0px; margin-top: 0px;" name="search_form">
+    </form>  
+</div> <!-- End search-header -->
+<div class="content">
+    {% for instance in object %}
+    <a clss="block-link" href='{{instance.get_absolute_url}}'>
+        <div class="facility-block">
+            {% if instance.image != None %}
+            <img src="{% static instance.image %}" width="400px" height="200px">
+            {% endif %}
+            <b>{{ instance.name}}</b><br>
+            {{ instance.address }}<br>
+            Order deadline: {{ instance.deadline|date:"G:i" }}
+        </div>
+    </a>
+    {% endfor %}
+</div> <!-- End content -->
+
+{% endblock %}
