@@ -10,7 +10,7 @@ class Person(models.Model):
     firstname = models.CharField(max_length=50, blank=False)
     surname = models.CharField(max_length=50, blank=False)
     address = models.CharField(max_length=150, blank=False)
-    telephone = models.CharField(max_length=25, blank=False, unique=True)
+    telephone = models.CharField(max_length=25, blank=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     email = models.CharField(max_length=32, unique=True, blank=True, null=True)
 
@@ -52,3 +52,25 @@ class Person(models.Model):
             pass
         else:
             raise PermissionDenied()
+
+
+class Course(models.Model):
+    id_course = models.AutoField(
+        primary_key=True)  # basically IntegerField but with autoincrementation so after all Primary Key
+    description = models.CharField(max_length=1500, blank=False)
+    name = models.CharField(max_length=50, blank=False)
+    SEMESTR = (
+        ('w', 'Winter'),  # Winter time
+        ('s', 'Summer'),  # Summer time
+    )
+    type = models.CharField(
+        max_length=1,
+        choices=SEMESTR,
+        default='w',  # By default will be winter time
+    )
+    def get_absolute_url(self):
+        return f"facility/{self.id_course}"
+
+    def __str__(self):
+        """String for representing the MyModelName object (in Admin site etc.)."""
+        return self.name

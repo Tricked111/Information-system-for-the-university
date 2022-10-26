@@ -1,43 +1,88 @@
-
-<html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>WIS2</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-      
-    </head>
-  <link href="https://getbootstrap.com/docs/5.2/examples/sign-in/signin.css" rel="stylesheet">
-  <main class="form-signin w-100 m-auto">
-    <form class ='container'>
-      <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+{% extends "base.html" %}
+{% block link %}<link href="https://getbootstrap.com/docs/5.2/examples/sign-in/signin.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+{% endblock %}
+{% block style %}<style type="text/css">
+  form {
+    display: block;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
   
-      
-      <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
-      </div>
-      <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput">
-        <label for="floatingInput">Name</label>
-      </div>
-      <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput">
-        <label for="floatingInput">Surname</label>
-      </div>
-      <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
-      </div>
-  
-  
-      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
-    </form>
-  </main>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  
-  
+  form input {
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    width: 25%;
+  }
+ </style>{% endblock %}
+{% block content %}
+  <main class="container">
+      <h1 class="h3 mb-3 fw-normal"><center>Please sign up</center></h1>
+      <div class="register-block">
+      <form method="POST">
+        {%csrf_token%}
+        <div class="form-floating">
+          <p>
+            <label for="id_username">Username:</label>
+            <input type="text" name="username" class="form-control" maxlength="150" autofocus required id="id_username">
+            
+          </p>
+        
+          
+          <p>
+            <label for="id_firstname">Firstname:</label>
+            <input type="text" name="firstname" class="form-control" maxlength="30" id="id_firstname">
+            
+            
+          </p>
+        
+          
+          <p>
+            <label for="id_surname">Surname:</label>
+            <input type="text" name="surname" class="form-control" maxlength="30" id="id_surname">
+            
+            
+          </p>
+        
+          
+          <p>
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" class="form-control" maxlength="254" required id="id_email">
+            
+            
+          </p>
+        
+          
+          <p>
+            <label for="id_address">Address:</label>
+            <input type="text" name="address" class="form-control" maxlength="30" id="id_address">
+          </p>
+        
+          
+          <p>
+            <label for="id_telephone">Telephone:</label>
+            <input type="text" name="telephone" class="form-control" maxlength="30" id="id_telephone">
+            
+            
+          </p>
     
-  </html>
+          <p>
+            <label for="id_password2">Password confirmation:</label>
+            <input type="password" name="password2" class="form-control" autocomplete="new-password" required id="id_password2">            
+            
+          </p>
+        
+          
+          <p>
+            <label for="id_password1">Password:</label>
+            <input type="password" name="password1" class="form-control" autocomplete="new-password" required id="id_password1">
+          </p>
+        </div>
+  
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+      </form>
+    </div>
+  </main>
+  {% endblock %}
   

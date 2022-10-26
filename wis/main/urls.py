@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView, LogoutView,PasswordChangeView,P
 #basic
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login', views.login, name='login'),
-    path('register', views.signup, name='register')
+    path('login', views.signin, name='login'),
+    path('register', views.signup, name='register'),
+    path('logged', views.logged_view, name='loggend_on')
 ]
