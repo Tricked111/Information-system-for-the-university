@@ -10,7 +10,9 @@ from .forms import *
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    course = Course.objects.all()
+    
+    return render(request, 'index.html',{'course' : course})
 
 
 def signin(request):

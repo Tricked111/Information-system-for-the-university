@@ -55,10 +55,13 @@ class Person(models.Model):
 
 
 class Course(models.Model):
-    id_course = models.AutoField(
+    id_course = models.CharField(max_length = 4,
         primary_key=True)  # basically IntegerField but with autoincrementation so after all Primary Key
-    description = models.CharField(max_length=1500, blank=False)
-    name = models.CharField(max_length=50, blank=False)
+    title = models.TextField(blank = True)
+    description = models.TextField(blank=False)
+    #name = models.CharField(max_length=50, blank=False)
+    credits = models.IntegerField()
+    fakulta = models.CharField(max_length = 4)
     SEMESTR = (
         ('w', 'Winter'),  # Winter time
         ('s', 'Summer'),  # Summer time

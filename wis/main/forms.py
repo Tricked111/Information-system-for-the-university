@@ -22,6 +22,7 @@ class person_form(forms.ModelForm):
 
 class SignUpForm(UserCreationForm):
 
+    username = forms.CharField(max_length=30, required=False)
     firstname = forms.CharField(max_length=30, required=False)
     surname = forms.CharField(max_length=30, required=False)
     address = forms.CharField(max_length=30, required=False)
@@ -30,4 +31,4 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'firstname', 'surname', 'email','address','telephone', 'password2', 'password1']
+        fields = '__all__'#['username', 'firstname', 'surname', 'email','address','telephone', 'password2', 'password1']
