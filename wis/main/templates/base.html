@@ -20,15 +20,30 @@
         </a>
   
         <ul class="nav nav-pills">
-          <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+          <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
+          {% if user.is_authenticated%}
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+          {% else %}
           <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Logout</a></li>
           <li class="nav-item"><a href="/register" class="nav-link">Registrate</a></li>
+          {% endif %}
+          {% if user.is_authenticated%}
           <li class="nav-item"><a href="#" class="nav-link">My profile</a></li>
+          {% endif %}
         </ul>
       </header>
     </div>
-
+    <div class="container">
+    {% if messages %}
+      {% for messages in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{ messages }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+    </div>
+    
     {% block content %}
 
     {% endblock %}

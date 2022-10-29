@@ -24,6 +24,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('', include('main.urls')),
+    path('login',include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

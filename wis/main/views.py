@@ -1,10 +1,12 @@
+from atexit import register
 from django.shortcuts import render, redirect
 
 from django.http import Http404
 from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login,logout,authenticate
+from django.contrib import messages
 from .forms import *
 
 # Create your views here.
@@ -15,8 +17,28 @@ def index(request):
     return render(request, 'index.html',{'course' : course})
 
 
-def signin(request):
-    return render(request, 'login.html')
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']    
+        user = authenticate(request,username=username,password=password)
+    
+        if user is not None:
+            login(request,user)
+            return redirect("/")         
+        else:
+            messages.success(request,"Error authenticate.Try again...")
+            return redirect("/login")
+            #return render(request, 'login.html',{})
+    else:
+        return render(request, 'login.html',{})
+
+
+
+def logout_user(request):
+    logout(request)
+    messages.success(request,"You Were logout")
+    return redirect("/")
 
 def logged_view(request):
     context = {
@@ -25,7 +47,37 @@ def logged_view(request):
 
     return render(request, 'logged_on.html', context)
 
-def signup(request):
+
+
+def register_user(request):
+    if request.method == "POST":
+        
+        form = SignUpForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            #email = form.cleaned_data['email']
+            #firstname = form.cleaned_data['firstname']
+
+            user = authenticate(username=username,password=password)
+            login(request,user)    
+            messages.success(request,"Registration Successful!")
+            return redirect('/')
+    
+    else:
+        form = SignUpForm()
+        
+    return render(request,'register.html',{
+        'form' : form,
+    })
+
+
+""" 
+
+
+def register_userr(request):
     if request.method == 'POST':
 
         form = SignUpForm(request.POST)
@@ -33,7 +85,7 @@ def signup(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+            raw_password = form.cleaned_data.get('password2')
 
             firstname = form.cleaned_data.get('firstname')
             surname = form.cleaned_data.get('surname')
@@ -44,11 +96,14 @@ def signup(request):
             user = authenticate(username=username, password=raw_password)
 
             login(request, user)
+            messages.success(request,"Registration Successful!")
+            
             user_instance = User.objects.filter(username=username).first()
             Person.objects.create(user=user_instance, firstname=firstname, surname=surname, address=address,
                                   telephone=telephone, role='s')
 
-            return redirect('loggend_on')
+            return redirect('/')
     else:
+        messages.success(request,"Registration Failed!")
         form = SignUpForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'register.html', {'form': form}) """
