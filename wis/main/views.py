@@ -78,7 +78,6 @@ def register_user(request):
     
     else:
         form = SignUpForm()
-        print(dir(form))
     return render(request,'register.html',{
         'form' : form,
     })
