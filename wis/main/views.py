@@ -73,7 +73,7 @@ def register_user(request):
         
             
         else:
-            messages.success(request,f"Registration Failed! {form.errors.as_text()}")
+            messages.success(request,f"Registration Failed! \n{form.errors.as_text()}")
             return redirect('/register')
     
     else:
