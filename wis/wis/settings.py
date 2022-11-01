@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'IIS_projekt',
-        'USER': '',
+        'USER': 'xkniaz00',
         'PASSWORD': '1234',
         'HOST': '34.122.99.99',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
