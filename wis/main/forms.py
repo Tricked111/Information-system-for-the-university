@@ -22,10 +22,21 @@ class person_form(forms.ModelForm):
 
 class SignUpForm(UserCreationForm):
 
-    username = forms.CharField(max_length=30, required=False)
+    username = forms.CharField(max_length=30)
     firstname = forms.CharField(max_length=30, required=False)
+    surname= forms.CharField(max_length=30, required=False)
     email = forms.EmailField(max_length=254)
 
     class Meta:
         model = User
-        fields = ('username', 'firstname','email','password1', 'password2')
+        fields = ('username', 'firstname', 'surname', 'email', 'password1', 'password2')
+
+
+class EditProfileForm(forms.Form):
+    #user = forms.CharField(max_length=30, required=False, help_text='First Name.')
+
+    firstname = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={"class":"tmpclass"}))
+    surname = forms.CharField(max_length=30, required=False)
+    address = forms.CharField(max_length=30, required=False)
+    email = forms.EmailField(max_length=254)
+    telephone = forms.CharField(max_length=30, required=False)

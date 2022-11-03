@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block link %}<link href="https://getbootstrap.com/docs/5.2/examples/sign-in/signin.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+{% endblock %}
+{% block style %}<style type="text/css">
+  form {
+    display: block;
+    width: 25%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
+  
+  form input {
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    width: 25%;
+  }
+ </style>{% endblock %}
+{% block content %}
+  
+<main class="container">
+      <h1 class="h3 mb-3 fw-normal"><center>Edit profile</center></h1>
+      <div class="register-block">
+      <form method="POST" action="{% url 'profile_edit' %}">
+        {%csrf_token%}
+        <div class="form-floating">
+          <p>
+            <label for="id_username">Username:</label>
+            <input type="text" name="username" class="form-control" maxlength="150" autofocus id="id_username" placeholder={{person.user}}>
+          </p>
+          <p>
+            <label for="id_firstname">Firstname:</label>
+            <input type="text" name="firstname" class="form-control" maxlength="30" id="id_firstname" placeholder={{person.firstname}}>
+          </p>
+          <p>
+            <label for="id_surname">Surname:</label>
+            <input type="text" name="surname" class="form-control" maxlength="30" id="id_surname" placeholder={{person.surname}}>
+          </p>
+          <p>
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" class="form-control" maxlength="254" id="id_email" placeholder={{person.email}}>
+          </p>
+          <p>
+            <label for="id_address">Address:</label>
+            <input type="address" name="address" class="form-control" maxlength="254" id="id_address" placeholder={{person.address}}>
+          </p>
+          <p>
+            <label for="id_telephone">Phone number:</label>
+            <input type="telephone" name="telephone" class="form-control" maxlength="254" id="id_telephone" placeholder={{person.telephone}}>
+          </p>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Update</button> 
+      </form>
+    </div>
+  </main>
+  {% endblock %}
+  

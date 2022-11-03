@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container">
+    <div class="profile-window">
+            <div style="float: right; margin-top: 2px">
+                <a class="hoverLink" href="profile_edit">Course description</a>
+            </div>
+            <br>
+            <hr style="margin: 4px 0 10px">
+            <div style="display:block">
+                Course Name: {{ course.title }}<br>
+            </div>
+            <hr style="margin: 10px 0 10px">
+        </div>
+</main>
+
+{% endblock %}

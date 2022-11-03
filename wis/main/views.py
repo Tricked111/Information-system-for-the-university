@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
 
@@ -40,13 +41,21 @@ def logout_user(request):
     messages.success(request,"You Were logout")
     return redirect("/")
 
+
 def logged_view(request):
     context = {
-
     }
 
     return render(request, 'logged_on.html', context)
 
+
+def courses_view(request, id):
+    course = Course.objects.objects.filter(id_course=id)
+    context = {
+        "cousre" : course
+    }
+
+    return render(request, 'course_detail.html', context)
 
 
 def register_user(request):
@@ -58,7 +67,9 @@ def register_user(request):
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
-            
+            firstname = form.cleaned_data['firstname']
+            surname = form.cleaned_data['surname']
+            email = form.cleaned_data['email']
             
             user = authenticate(username=username,password=password)
             login(request,user)    
@@ -66,8 +77,8 @@ def register_user(request):
             """ user_instance = User.objects.filter(username=username).first()
             Person.objects.create(user=user_instance, firstname=firstname, surname=surname, address=address,
                                   telephone=telephone, role='s') """
-
-            
+            user_instance = User.objects.filter(username=username).first()
+            Person.objects.create(user=user_instance, firstname=firstname, surname=surname, email=email, role='v')
             messages.success(request,"Registration Successful!")
             return redirect('/')
         
@@ -81,3 +92,57 @@ def register_user(request):
     return render(request,'register.html',{
         'form' : form,
     })
+
+
+@login_required
+def profile_view(request):
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+
+        context = {
+            "person": person_instance
+        }
+    else:
+        raise Http404
+
+    return render(request, 'profile.html', context)
+
+
+@login_required
+def profile_edit(request):
+    person_instance = Person.objects.filter(user=request.user).first()
+    if request.method == 'POST':
+        person_instance = Person.objects.filter(user=request.user).first()
+        user_instance = request.user
+
+        form = EditProfileForm(request.POST or None)
+
+        if form.is_valid():
+
+            firstname = form.cleaned_data('firstname')
+            surname = form.cleaned_data('surname')
+            address = form.cleaned_data('address')
+            email = form.cleaned_data('email')
+            telephone = form.cleaned_data('telephone')
+
+            Person.objects.filter(id_person=person_instance.id_person).update(firstname=firstname,
+                                                                              surname=surname,
+                                                                              address=address,
+                                                                              telephone=telephone,
+                                                                              email=email)
+
+            person_instance = Person.objects.filter(user=request.user).first()
+            return redirect('/profile')
+
+
+    else:
+        form = EditProfileForm()
+
+    context = {
+        'form': form,
+        'user_profile': request.user,
+        'person': person_instance,
+
+    }
+
+    return render(request, 'profile_edit.html', context)
