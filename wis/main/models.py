@@ -72,7 +72,7 @@ class Course(models.Model):
         default='w',  # By default will be winter time
     )
     def get_absolute_url(self):
-        return f"cousre/{self.id_course}"
+        return f"course/{self.id_course}"
 
     def __str__(self):
         """String for representing the MyModelName object (in Admin site etc.)."""

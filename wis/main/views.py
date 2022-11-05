@@ -50,9 +50,9 @@ def logged_view(request):
 
 
 def courses_view(request, id):
-    course = Course.objects.objects.filter(id_course=id)
+    course = Course.objects.filter(id_course=id)
     context = {
-        "cousre" : course
+        "cousre" : course.title
     }
 
     return render(request, 'course_detail.html', context)
@@ -100,7 +100,8 @@ def profile_view(request):
         person_instance = Person.objects.filter(user=request.user).first()
 
         context = {
-            "person": person_instance
+            "person": person_instance,
+            "role" : person_instance.role
         }
     else:
         raise Http404
