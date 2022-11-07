@@ -53,7 +53,7 @@ def courses_view(request, id):
     course = Course.objects.filter(id_course=id).first()
 
     context = {
-        "course" : course.title
+        "course" : course.title.upper(),
     }
 
     return render(request, 'course_detail.html', context)
