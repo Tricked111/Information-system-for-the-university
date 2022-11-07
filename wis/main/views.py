@@ -14,10 +14,10 @@ from .forms import *
 
 def index(request):
     course = Course.objects.all()
-    person_instance = Person.objects.filter(user=request.user).first()
+    #person_instance = Person.objects.filter(user=request.user).first()
     context = {
             'course' : course,
-            "role": person_instance.role
+            #"role": person_instance.role
         }
     return render(request, 'index.html', context)
 
@@ -55,9 +55,39 @@ def logged_view(request):
 
 def courses_view(request, id):
     course = Course.objects.filter(id_course=id).first()
+    person_instance = Person.objects.filter(user=request.user).first()
+    
+    try:
+        lsit_abbrv = [i.get('abbrv') for i in person_instance.courses.values()]  
+
+    except:
+        lsit_abbrv = []
+
+    is_register = False
+
+    for i in lsit_abbrv:
+        if i == course.abbrv:
+            is_register = True
+            break
+
+    
+    if request.method == "POST":
+        
+        if 'Register' in request.POST:
+            person_instance.courses.add(course)   
+            person_instance.save() 
+            is_register = True
+
+        elif 'Unregister' in request.POST:
+            person_instance.courses.remove(course)
+            person_instance.save()
+            is_register = False
 
     context = {
-        "course" : course.title.upper(),
+        "course" : course,
+        "course_abbrv" : course.abbrv,
+        "course_title" : course.title,
+        "is_register" : is_register,
     }
 
     return render(request, 'course_detail.html', context)
@@ -121,7 +151,14 @@ def profile_view(request):
     if request.user.is_authenticated:
         person_instance = Person.objects.filter(user=request.user).first()
 
+        try:
+            lsit_abbrv = [i.get('abbrv') for i in person_instance.courses.values()]   
+
+        except:
+            list_abbrv = []
+        
         context = {
+            "lsit_abbrv" : lsit_abbrv,
             "person": person_instance,
             "role" : person_instance.role
         }

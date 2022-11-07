@@ -4,6 +4,33 @@ from django.conf import settings
 
 # Create your models here.
 
+class Course(models.Model):
+    id_course = models.IntegerField(primary_key=True) # basically IntegerField but with autoincrementation so after all Primary Key
+    abbrv = models.CharField(max_length = 5)    
+    title = models.TextField(blank = True)
+    description = models.TextField(blank=False)
+    credits = models.IntegerField()
+    fakulta = models.CharField(max_length = 4)
+    SEMESTR = (
+        ('w', 'Winter'),  # Winter time
+        ('s', 'Summer'),  # Summer time
+    )
+    type = models.CharField(
+        max_length=1,
+        choices=SEMESTR,
+        default='w',  # By default will be winter time
+    )
+    def get_absolute_url(self):
+        return f"{self.id_course}"
+
+    def __str__(self):
+        """String for representing the MyModelName object (in Admin site etc.)."""
+        return self.id_course
+
+
+
+
+
 
 class Person(models.Model):
     id_person = models.AutoField(primary_key=True)
@@ -13,7 +40,8 @@ class Person(models.Model):
     telephone = models.CharField(max_length=25, blank=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     email = models.CharField(max_length=32, unique=True, blank=True, null=True)
-
+    courses = models.ManyToManyField(Course)
+    
     ROLES = (
         ('a', 'administrator'),
         ('g', 'garant'),
@@ -56,27 +84,3 @@ class Person(models.Model):
 
 class Termin(models.Model):
     pass
-
-
-class Course(models.Model):
-    id_course = models.IntegerField(primary_key=True) # basically IntegerField but with autoincrementation so after all Primary Key
-    abbrv = models.CharField(max_length = 5)    
-    title = models.TextField(blank = True)
-    description = models.TextField(blank=False)
-    credits = models.IntegerField()
-    fakulta = models.CharField(max_length = 4)
-    SEMESTR = (
-        ('w', 'Winter'),  # Winter time
-        ('s', 'Summer'),  # Summer time
-    )
-    type = models.CharField(
-        max_length=1,
-        choices=SEMESTR,
-        default='w',  # By default will be winter time
-    )
-    def get_absolute_url(self):
-        return f"{self.id_course}"
-
-    def __str__(self):
-        """String for representing the MyModelName object (in Admin site etc.)."""
-        return self.name
