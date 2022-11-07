@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <h2 class="page-title">Admin page</h2>
+    <div class="register-block">
+
+        {% for instance in persons %}
+        <div style="text-align: left;">
+            ID: {{instance.id_person}}<br>
+            Login: {{instance.user}} <br>
+            Firstname: {{instance.firstname}} <br>
+            Surname: {{instance.surname}} <br>
+            {% if instance.role == "a" %}
+                Role: administrator
+                {% elif instance.role == "l" %}
+                Role: lektor
+                {% elif instance.role == "g" %}
+                Role: garant
+                {% else %}
+                Role: registered user
+                {% endif %}
+            <br style="margin-bottom: 10px">
+            <span style="font-size: 18px;"><b><a class="hoverLink" href="#">Update</a></b> |
+            <b><a class="hoverLink" href="#">Delete</a></b></span><br>
+        </div>
+            <hr style="margin: 10px 0px">
+        {% endfor %}
+    </div>
+{% endblock %}

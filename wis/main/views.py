@@ -14,8 +14,12 @@ from .forms import *
 
 def index(request):
     course = Course.objects.all()
-    
-    return render(request, 'index.html',{'course' : course})
+    person_instance = Person.objects.filter(user=request.user).first()
+    context = {
+            'course' : course,
+            "role": person_instance.role
+        }
+    return render(request, 'index.html', context)
 
 
 def login_user(request):
@@ -62,8 +66,6 @@ def study_view(request):
     pass
 
 
-
-
 def register_user(request):
     if request.method == "POST":
         
@@ -96,6 +98,23 @@ def register_user(request):
         'form' : form,
     })
 
+@login_required
+def admin_view(request):
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+
+        if person_instance.role != 'a':
+            raise Http404
+
+        persons = Person.objects.all()
+        context = {
+            "role": person_instance.role,
+            "persons" : persons
+        }
+    else:
+        raise Http404
+
+    return render(request, 'admin_view.html', context)
 
 @login_required
 def profile_view(request):
