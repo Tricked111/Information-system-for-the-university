@@ -22,14 +22,16 @@
         <ul class="nav nav-pills">
           <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
           {% if user.is_authenticated%}
-          <li class="nav-item"><a href="/study" class="nav-link">My Study</a></li>
+          {% if role == "a" %}
+            <li class="nav-item"><a href="/admin_view" class="nav-link">Admin</a></li>
+          {% else %}
+            <li class="nav-item"><a href="/study" class="nav-link">My Study</a></li>
+          {% endif %}
+          <li class="nav-item"><a href="/profile" class="nav-link">My profile</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
           {% else %}
           <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
           <li class="nav-item"><a href="/register" class="nav-link">Registrate</a></li>
-          {% endif %}
-          {% if user.is_authenticated%}
-          <li class="nav-item"><a href="/profile" class="nav-link">My profile</a></li>
-          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
           {% endif %}
         </ul>
       </header>

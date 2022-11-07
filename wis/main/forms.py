@@ -38,5 +38,5 @@ class EditProfileForm(forms.Form):
     firstname = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={"class":"tmpclass"}))
     surname = forms.CharField(max_length=30, required=False)
     address = forms.CharField(max_length=30, required=False)
-    email = forms.EmailField(max_length=254)
+    email = forms.EmailField(max_length=254, required=False)
     telephone = forms.CharField(max_length=30, required=False)

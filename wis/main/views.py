@@ -14,8 +14,12 @@ from .forms import *
 
 def index(request):
     course = Course.objects.all()
-    
-    return render(request, 'index.html',{'course' : course})
+    person_instance = Person.objects.filter(user=request.user).first()
+    context = {
+            'course' : course,
+            "role": person_instance.role
+        }
+    return render(request, 'index.html', context)
 
 
 def login_user(request):
@@ -62,8 +66,6 @@ def study_view(request):
     pass
 
 
-
-
 def register_user(request):
     if request.method == "POST":
         
@@ -96,6 +98,23 @@ def register_user(request):
         'form' : form,
     })
 
+@login_required
+def admin_view(request):
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+
+        if person_instance.role != 'a':
+            raise Http404
+
+        persons = Person.objects.all()
+        context = {
+            "role": person_instance.role,
+            "persons" : persons
+        }
+    else:
+        raise Http404
+
+    return render(request, 'admin_view.html', context)
 
 @login_required
 def profile_view(request):
@@ -122,12 +141,11 @@ def profile_edit(request):
         form = EditProfileForm(request.POST or None)
 
         if form.is_valid():
-
-            firstname = form.cleaned_data('firstname')
-            surname = form.cleaned_data('surname')
-            address = form.cleaned_data('address')
-            email = form.cleaned_data('email')
-            telephone = form.cleaned_data('telephone')
+            firstname = form.cleaned_data['firstname'] if form.cleaned_data['firstname'] != '' else person_instance.firstname
+            surname = form.cleaned_data['surname'] if form.cleaned_data['surname'] != '' else person_instance.surname
+            address = form.cleaned_data['address'] if form.cleaned_data['address'] != '' else person_instance.address
+            email = form.cleaned_data['email'] if form.cleaned_data['email'] != '' else person_instance.email
+            telephone = form.cleaned_data['telephone'] if form.cleaned_data['telephone'] != '' else person_instance.telephone
 
             Person.objects.filter(id_person=person_instance.id_person).update(firstname=firstname,
                                                                               surname=surname,
