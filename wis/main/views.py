@@ -53,7 +53,7 @@ def courses_view(request, id):
     course = Course.objects.filter(id_course=id).first()
 
     context = {
-        "course" : course.title
+        "course" : course
     }
 
     return render(request, 'course_detail.html', context)
@@ -122,12 +122,11 @@ def profile_edit(request):
         form = EditProfileForm(request.POST or None)
 
         if form.is_valid():
-
-            firstname = form.cleaned_data('firstname')
-            surname = form.cleaned_data('surname')
-            address = form.cleaned_data('address')
-            email = form.cleaned_data('email')
-            telephone = form.cleaned_data('telephone')
+            firstname = form.cleaned_data['firstname'] if form.cleaned_data['firstname'] != '' else person_instance.firstname
+            surname = form.cleaned_data['surname'] if form.cleaned_data['surname'] != '' else person_instance.surname
+            address = form.cleaned_data['address'] if form.cleaned_data['address'] != '' else person_instance.address
+            email = form.cleaned_data['email'] if form.cleaned_data['email'] != '' else person_instance.email
+            telephone = form.cleaned_data['telephone'] if form.cleaned_data['telephone'] != '' else person_instance.telephone
 
             Person.objects.filter(id_person=person_instance.id_person).update(firstname=firstname,
                                                                               surname=surname,
