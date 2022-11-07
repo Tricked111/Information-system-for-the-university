@@ -54,12 +54,15 @@ class Person(models.Model):
             raise PermissionDenied()
 
 
+class Termin(models.Model):
+    pass
+
+
 class Course(models.Model):
-    id_course = models.CharField(max_length = 4,
-        primary_key=True)  # basically IntegerField but with autoincrementation so after all Primary Key
+    id_course = models.IntegerField(primary_key=True) # basically IntegerField but with autoincrementation so after all Primary Key
+    abbrv = models.CharField(max_length = 5)    
     title = models.TextField(blank = True)
     description = models.TextField(blank=False)
-    #name = models.CharField(max_length=50, blank=False)
     credits = models.IntegerField()
     fakulta = models.CharField(max_length = 4)
     SEMESTR = (
@@ -72,7 +75,7 @@ class Course(models.Model):
         default='w',  # By default will be winter time
     )
     def get_absolute_url(self):
-        return f"course/{self.id_course}"
+        return f"{self.id_course}"
 
     def __str__(self):
         """String for representing the MyModelName object (in Admin site etc.)."""

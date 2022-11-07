@@ -15,5 +15,5 @@ urlpatterns = [
     path('logged', views.logged_view, name='loggend_on'),
     path('profile', views.profile_view, name='profile'),
     path('profile_edit', views.profile_edit, name='profile_edit'),
-    path('course/<int:id>', views.courses_view, name='courses-view'),
+    path('<int:id>', views.courses_view, name='courses-view'),
 ]
