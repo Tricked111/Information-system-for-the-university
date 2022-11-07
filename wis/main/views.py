@@ -50,12 +50,18 @@ def logged_view(request):
 
 
 def courses_view(request, id):
-    course = Course.objects.filter(id_course=id)
+    course = Course.objects.filter(id_course=id).first()
+
     context = {
-        "cousre" : course.title
+        "course" : course.title
     }
 
     return render(request, 'course_detail.html', context)
+
+def study_view(request):
+    pass
+
+
 
 
 def register_user(request):
@@ -74,9 +80,6 @@ def register_user(request):
             user = authenticate(username=username,password=password)
             login(request,user)    
             
-            """ user_instance = User.objects.filter(username=username).first()
-            Person.objects.create(user=user_instance, firstname=firstname, surname=surname, address=address,
-                                  telephone=telephone, role='s') """
             user_instance = User.objects.filter(username=username).first()
             Person.objects.create(user=user_instance, firstname=firstname, surname=surname, email=email, role='v')
             messages.success(request,"Registration Successful!")

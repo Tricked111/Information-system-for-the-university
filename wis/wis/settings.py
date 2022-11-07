@@ -129,6 +129,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 LOGIN_REDIRECT_URL='/logged'
+LOGIN_URL = '/login'
 
 SESSION_COOKIE_AGE = 60 * 10
 SESSION_SAVE_EVERY_REQUEST = True
