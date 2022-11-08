@@ -59,14 +59,10 @@ def courses_view(request, id):
     if request.user.is_authenticated:
         person_instance = Person.objects.filter(user=request.user).first()
         
-        try:
-            lsit_abbrv = [i.get('abbrv') for i in person_instance.courses.values()]  
+        courses_user = person_instance.courses.all()
 
-        except:
-            lsit_abbrv = []
-
-        for i in lsit_abbrv:
-            if i == course.abbrv:
+        for i in courses_user:
+            if i.abbrv == course.abbrv:
                 is_register = True
                 break
 
@@ -92,8 +88,17 @@ def courses_view(request, id):
 
     return render(request, 'course_detail.html', context)
 
+@login_required
 def study_view(request):
-    pass
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+        courses = person_instance.courses.all()
+
+    contex = {
+        'courses' : courses,
+    }
+    
+    return render(request, 'study_view.html',contex)
 
 
 def register_user(request):
@@ -150,15 +155,8 @@ def admin_view(request):
 def profile_view(request):
     if request.user.is_authenticated:
         person_instance = Person.objects.filter(user=request.user).first()
-
-        try:
-            lsit_abbrv = [i.get('abbrv') for i in person_instance.courses.values()]   
-
-        except:
-            list_abbrv = []
         
         context = {
-            "lsit_abbrv" : lsit_abbrv,
             "person": person_instance,
             "role" : person_instance.role
         }
