@@ -55,33 +55,33 @@ def logged_view(request):
 
 def courses_view(request, id):
     course = Course.objects.filter(id_course=id).first()
-    person_instance = Person.objects.filter(user=request.user).first()
-    
-    try:
-        lsit_abbrv = [i.get('abbrv') for i in person_instance.courses.values()]  
-
-    except:
-        lsit_abbrv = []
-
     is_register = False
-
-    for i in lsit_abbrv:
-        if i == course.abbrv:
-            is_register = True
-            break
-
-    
-    if request.method == "POST":
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
         
-        if 'Register' in request.POST:
-            person_instance.courses.add(course)   
-            person_instance.save() 
-            is_register = True
+        try:
+            lsit_abbrv = [i.get('abbrv') for i in person_instance.courses.values()]  
 
-        elif 'Unregister' in request.POST:
-            person_instance.courses.remove(course)
-            person_instance.save()
-            is_register = False
+        except:
+            lsit_abbrv = []
+
+        for i in lsit_abbrv:
+            if i == course.abbrv:
+                is_register = True
+                break
+
+
+        if request.method == "POST":
+            
+            if 'Register' in request.POST:
+                person_instance.courses.add(course)   
+                person_instance.save() 
+                is_register = True
+
+            elif 'Unregister' in request.POST:
+                person_instance.courses.remove(course)
+                person_instance.save()
+                is_register = False
 
     context = {
         "course" : course,
