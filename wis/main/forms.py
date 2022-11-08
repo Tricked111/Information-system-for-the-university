@@ -40,3 +40,6 @@ class EditProfileForm(forms.Form):
     address = forms.CharField(max_length=30, required=False)
     email = forms.EmailField(max_length=254, required=False)
     telephone = forms.CharField(max_length=30, required=False)
+
+class UpdateUser(forms.Form):
+    role = forms.CharField(max_length=1, required=False)

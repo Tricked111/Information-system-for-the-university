@@ -2,10 +2,14 @@
 
 {% block content %}
 
-
+    <div class="container">
     <h2 class="page-title">Admin page</h2>
+    
     <div class="register-block">
-
+        <div style="float: right; margin-top: 2px">
+            <a href="/admin_view" class="#">Courses for approval</a>
+            <a class="hoverLink" href="#">Classrooms</a>
+        </div>
         {% for instance in persons %}
         <div style="text-align: left;">
             ID: {{instance.id_person}}<br>
@@ -16,16 +20,19 @@
                 Role: administrator
                 {% elif instance.role == "l" %}
                 Role: lektor
+                {% elif instance.role == "s" %}
+                Role: Student
                 {% elif instance.role == "g" %}
                 Role: garant
                 {% else %}
                 Role: Registered user
                 {% endif %}
             <br style="margin-bottom: 10px">
-            <span style="font-size: 18px;"><b><a class="hoverLink" href="#">Update</a></b> |
+            <span style="font-size: 18px;"><b><a class="hoverLink" href="{%url 'user_update' instance.id_person %}">Update</a></b> |
             <b><a class="hoverLink" href="#">Delete</a></b></span><br>
         </div>
             <hr style="margin: 10px 0px">
         {% endfor %}
     </div>
+</div>
 {% endblock %}

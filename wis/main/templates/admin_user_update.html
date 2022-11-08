@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container">
+    <h2 class="page-title">This user is a 
+        {% if person.role == "a" %}
+        Administrator<br>
+        {% elif person.role == "g" %}
+        Garant<br>
+        {% elif person.role == "s" %}
+        Student<br>
+        {% else %}
+        Registered user<br>
+        {% endif %}</h2>
+    <div class="profile-window">
+            <div style="float: right; margin-top: 2px">
+                {% if person.role == "a" %}
+                <a href="/admin_view" class="hoverLink">Admin</a>
+                {% endif %}
+                <a class="hoverLink" href="profile_edit">Edit profile</a>
+            </div>
+            <br>
+            <hr style="margin: 4px 0 10px">
+            <div style="display:block">
+                Your username: {{ person.user }}<br>
+                Name: {{ person.firstname }}<br>
+                Surname: {{ person.surname }}<br>
+                Email: {{ person.email }}<br>
+                Telephone: {{ person.telephone }}<br>
+                Address: {{ person.address }}<br> 
+                Course:
+            </div>
+            <form method="POST" action="{%url 'user_update' person.id_person %}">
+                {%csrf_token%}
+                <div class="form-floating">
+                  <p>
+                    To change the user role, enter the letter:<br>
+                    a - Administrator<br>
+                    g - garant<br>
+                    l - lektor<br>
+                    s - student<br>
+                    <label for="role">Change role:</label>
+                    <input type="text" name="role" maxlength="2" autofocus id="role">
+                  </p>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Update</button>
+            </form>    
+            <hr style="margin: 10px 0 10px">
+        </div>
+</main>
+
+{% endblock %}

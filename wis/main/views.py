@@ -166,12 +166,31 @@ def profile_view(request):
     return render(request, 'profile.html', context)
 
 
+def user_update(request, id):
+    person_instance = Person.objects.filter(id_person=id).first()
+    if request.method == 'POST':
+        person_instance = Person.objects.filter(id_person=id).first()
+
+        form = UpdateUser(request.POST or None)
+        if form.is_valid():
+            role = form.cleaned_data['role'] if form.cleaned_data['role'] != '' else person_instance.role
+            Person.objects.filter(id_person=person_instance.id_person).update(role=role)
+            person_instance = Person.objects.filter(id_person=id).first()
+            return redirect('/admin_view')
+    else:
+        form = UpdateUser()    
+
+    context = {
+        'form' : form,
+        'person': person_instance,
+    }
+    return render(request, 'admin_user_update.html', context)
+
 @login_required
 def profile_edit(request):
     person_instance = Person.objects.filter(user=request.user).first()
     if request.method == 'POST':
         person_instance = Person.objects.filter(user=request.user).first()
-        user_instance = request.user
 
         form = EditProfileForm(request.POST or None)
 
