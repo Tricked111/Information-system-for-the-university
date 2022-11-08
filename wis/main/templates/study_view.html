@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- End main-header -->
+<main class="container">
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    
+    {% for i in courses%}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+            <strong>{{ i.abbrv }}</strong>
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+        <div class="accordion-body">
+          <strong>Semester: </strong>
+            {% if i.type == 'w' %} winter {% else %} summer {% endif %}
+            <br>
+          <strong>Credits: </strong>
+            {{ i.credits }}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+</main>
+
+
+
+
+{% load static %}
+
+
+
+{% endblock %}
+
