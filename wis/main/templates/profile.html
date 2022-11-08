@@ -14,6 +14,9 @@
         {% endif %}</h2>
     <div class="profile-window">
             <div style="float: right; margin-top: 2px">
+                {% if person.role == "a" %}
+                <a href="/admin_view" class="hoverLink">Admin</a>
+                {% endif %}
                 <a class="hoverLink" href="profile_edit">Edit profile</a>
             </div>
             <br>

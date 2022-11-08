@@ -14,10 +14,8 @@ from .forms import *
 
 def index(request):
     course = Course.objects.all()
-    person_instance = Person.objects.filter(user=request.user).first()
     context = {
-            'course' : course,
-            "role": person_instance.role
+            'course' : course
         }
     return render(request, 'index.html', context)
 
