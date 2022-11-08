@@ -14,8 +14,10 @@ from .forms import *
 
 def index(request):
     course = Course.objects.all()
+    #person_instance = Person.objects.filter(user=request.user).first()
     context = {
-            'course' : course
+            'course' : course,
+            #"role": person_instance.role
         }
     return render(request, 'index.html', context)
 
@@ -53,15 +55,50 @@ def logged_view(request):
 
 def courses_view(request, id):
     course = Course.objects.filter(id_course=id).first()
+    is_register = False
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+        
+        courses_user = person_instance.courses.all()
+
+        for i in courses_user:
+            if i.abbrv == course.abbrv:
+                is_register = True
+                break
+
+
+        if request.method == "POST":
+            
+            if 'Register' in request.POST:
+                person_instance.courses.add(course)   
+                person_instance.save() 
+                is_register = True
+
+            elif 'Unregister' in request.POST:
+                person_instance.courses.remove(course)
+                person_instance.save()
+                is_register = False
 
     context = {
-        "course" : course
+        "course" : course,
+        "course_abbrv" : course.abbrv,
+        "course_title" : course.title,
+        "is_register" : is_register,
     }
 
     return render(request, 'course_detail.html', context)
 
+@login_required
 def study_view(request):
-    pass
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+        courses = person_instance.courses.all()
+
+    contex = {
+        'courses' : courses,
+    }
+    
+    return render(request, 'study_view.html',contex)
 
 
 def register_user(request):
@@ -118,7 +155,7 @@ def admin_view(request):
 def profile_view(request):
     if request.user.is_authenticated:
         person_instance = Person.objects.filter(user=request.user).first()
-
+        
         context = {
             "person": person_instance,
             "role" : person_instance.role
