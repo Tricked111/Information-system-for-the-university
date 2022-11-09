@@ -18,4 +18,5 @@ urlpatterns = [
     path('<int:id>', views.courses_view, name='courses-view'),
     path('admin_view', views.admin_view, name='admin_view'),
     path('user_update/<int:id>', views.user_update, name='user_update'),
+    path('user_delete/<int:id>', views.user_delete, name='user_delete'),
 ]

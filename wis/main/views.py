@@ -166,6 +166,19 @@ def profile_view(request):
     return render(request, 'profile.html', context)
 
 
+def user_delete(request, id):
+    person_instance = Person.objects.filter(id_person=id).first()
+    if request.method == 'POST':
+        if 'Delete' in request.POST:
+            Person.objects.filter(id_person=person_instance.id_person).delete()
+        return redirect('/admin_view')
+    context = {
+        'person': person_instance,
+    }
+    return render(request, 'admin_user_delete.html', context)
+    
+
+
 def user_update(request, id):
     person_instance = Person.objects.filter(id_person=id).first()
     if request.method == 'POST':
