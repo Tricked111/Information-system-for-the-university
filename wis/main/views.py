@@ -1,5 +1,5 @@
 from atexit import register
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.http import Http404
 from django.http import HttpResponse
@@ -9,15 +9,19 @@ from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 def index(request):
     course = Course.objects.all()
-    #person_instance = Person.objects.filter(user=request.user).first()
+
+    person_instance = None
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
     context = {
             'course' : course,
-            #"role": person_instance.role
+            "role": person_instance
         }
     return render(request, 'index.html', context)
 
@@ -170,14 +174,14 @@ def user_delete(request, id):
     person_instance = Person.objects.filter(id_person=id).first()
     if request.method == 'POST':
         if 'Delete' in request.POST:
-            Person.objects.filter(id_person=person_instance.id_person).delete()
+            Person.objects.get(id_person=person_instance.id_person).delete()
+            User.objects.filter(username=person_instance.user).delete()
         return redirect('/admin_view')
     context = {
         'person': person_instance,
     }
     return render(request, 'admin_user_delete.html', context)
     
-
 
 def user_update(request, id):
     person_instance = Person.objects.filter(id_person=id).first()

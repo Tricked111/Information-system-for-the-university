@@ -17,6 +17,9 @@
                 {% if person.role == "a" %}
                 <a href="/admin_view" class="hoverLink">Admin</a>
                 {% endif %}
+                {% if person.role == "g" %}
+                <a href="/" class="hoverLink">Propose a new course</a>
+                {% endif %}
                 <a class="hoverLink" href="profile_edit">Edit profile</a>
             </div>
             <br>
