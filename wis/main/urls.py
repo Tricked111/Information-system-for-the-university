@@ -7,6 +7,9 @@ from django.contrib.auth.views import LoginView, LogoutView,PasswordChangeView,P
 
 #basic
 urlpatterns = [
+    path('404', views.page404, name='page_404'),
+    path('access_failed', views.access_failed, name='access_failed'),
+
     path('', views.index, name='index'),
     path('login', views.login_user, name='login'),
     path('logout',views.logout_user, name='logout'),
@@ -19,4 +22,8 @@ urlpatterns = [
     path('admin_view', views.admin_view, name='admin_view'),
     path('user_update/<int:id>', views.user_update, name='user_update'),
     path('user_delete/<int:id>', views.user_delete, name='user_delete'),
+
+    path('garant_view', views.garant_view, name='garant_view'),
 ]
+
+handler404 = "main.views.page404"
