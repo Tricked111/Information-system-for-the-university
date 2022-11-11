@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- End main-header -->
+
+<main class="container">
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <h2 class="page-title">List of students:</h2>
+{% for instance in students %}
+        <div style="text-align: left;">
+            Login: {{instance.user}} <br>
+        </div>
+{% endfor %}
+    </div>
+</main>
+
+{% endblock %}

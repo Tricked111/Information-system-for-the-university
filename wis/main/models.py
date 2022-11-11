@@ -11,6 +11,7 @@ class Course(models.Model):
     description = models.TextField(blank=False)
     credits = models.IntegerField()
     fakulta = models.CharField(max_length = 4)
+    # max_persons = models.IntegerField()
     SEMESTR = (
         ('w', 'Winter'),  # Winter time
         ('s', 'Summer'),  # Summer time
@@ -83,4 +84,43 @@ class Person(models.Model):
 
 
 class Termin(models.Model):
+    # id_student = models.ForeignKey(Person, on_delete=models.CASCADE)
+    # id_course = models.ForeignKey(Course, on_delete=models.CASCADE, primary_key=True)
+    # name = models.CharField(max_length=50, blank=False)
+    # TYPES = (
+    #     ('l', 'lecture'),
+    #     ('c', 'cviceni'),
+    #     ('z', 'exam'),
+    #     ('p', 'project'),
+    #     ('h', 'homework')
+    # )
+    # type = models.CharField(
+    #     max_length=1,
+    #     choices=TYPES,
+    #     blank=False,
+    #     default='l'
+    # )
+    # hodnoceni = models.IntegerField()
     pass
+
+# class Hodnoceni(models.model):
+    # id_student = models.ForeignKey(Person, on_delete=models.CASCADE)
+    # id_course = models.ForeignKey(Course, on_delete=models.CASCADE, primary_key=True)
+    # hodnoceni = models.IntegerField()
+
+# class Unconfirmed_Course(models.Model):
+#     id_course = models.IntegerField(primary_key=True) # basically IntegerField but with autoincrementation so after all Primary Key
+#     abbrv = models.CharField(max_length = 5)    
+#     title = models.TextField(blank = True)
+#     description = models.TextField(blank=False)
+#     credits = models.IntegerField()
+#     fakulta = models.CharField(max_length = 4)
+#     SEMESTR = (
+#         ('w', 'Winter'),  # Winter time
+#         ('s', 'Summer'),  # Summer time
+#     )
+#     type = models.CharField(
+#         max_length=1,
+#         choices=SEMESTR,
+#         default='w',  # By default will be winter time
+#     )

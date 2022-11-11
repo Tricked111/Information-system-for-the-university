@@ -24,6 +24,7 @@ urlpatterns = [
     path('user_delete/<int:id>', views.user_delete, name='user_delete'),
 
     path('garant_view', views.garant_view, name='garant_view'),
+    path('student_list/<int:id>', views.students_view, name='student_list'),
 ]
 
 handler404 = "main.views.page404"

@@ -171,24 +171,17 @@ def admin_view(request):
         raise Http404
 
     return render(request, 'admin_view.html', context)
-
-
 @login_required
-def garant_view(request):
+def study_view(request):
     if request.user.is_authenticated:
         person_instance = Person.objects.filter(user=request.user).first()
+        courses = person_instance.courses.all()
 
-        if person_instance.role != 'g':
-            return redirect('/access_failed')
-            raise Http404
-
-        context = {
-            "person": person_instance
-        }
-    else:
-        raise Http404
-
-    return render(request, 'garant_view.html', context)
+    contex = {
+        'courses' : courses,
+    }
+    
+    return render(request, 'study_view.html',contex)
 
 
 @login_required
@@ -275,3 +268,42 @@ def profile_edit(request):
     }
 
     return render(request, 'profile_edit.html', context)
+
+
+@login_required
+def garant_view(request):
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+        courses = person_instance.courses.all()
+        if person_instance.role != 'g':
+            return redirect('/access_failed')
+            raise Http404
+
+        context = {
+            "person": person_instance,
+            'courses' : courses
+        }
+    else:
+        raise Http404
+
+    return render(request, 'garant_view.html', context)
+
+
+@login_required
+def students_view(request, id):
+    if request.user.is_authenticated:
+        person_instance = Person.objects.filter(user=request.user).first()
+        if person_instance.role != 'g':
+            return redirect('/access_failed')
+            raise Http404
+        course = Course.objects.filter(id_course=id).first()
+        students = Person.objects.filter(courses=course).all()
+    else:
+        raise Http404
+    context = {
+            "person": person_instance,
+            'courses' : course,
+            'students' : students
+        }
+
+    return render(request, 'list_of_students.html', context)
