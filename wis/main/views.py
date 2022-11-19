@@ -102,7 +102,7 @@ def courses_view(request, id):
         "course_abbrv" : course.abbrv,
         "course_title" : course.title,
         "is_register" : is_register,
-        'person' : person_instance,
+        #'person' : person_instance,
     }
 
     return render(request, 'course_detail.html', context)
