@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+<!-- Zkontrolujte pros�m nastaven� k�dov�n� v hlavi�ce dokumentu 
+     podle pou�it�ho editoru -->
+
+<h1>WIS</h1> <!-- Nahradte n�zvem sv�ho zad�n� -->
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Marina Kravchuk <!-- Nahra�te skute�n�m jm�nem a e-mailem autora a popisem �innosti -->
+	    <a href="mailto:xkravc02@stud.fit.vutbr.cz">xkravc02@stud.fit.vutbr.cz</a> -
+		Frontend(10%), Backend(45%) - logika backendu pro manipulace s Uživatelí, kurzy a Terminy, zalozeni databazi a naplneni ukazkovymi daty. Mala pomoc s frontendem.
+	</dd>
+	<dd>Daniil Tiurin <!-- Nahra�te skute�n�m jm�nem a e-mailem autora a popisem �innosti -->
+	    <a href="mailto:xtiuri02@stud.fit.vutbr.cz">xtiuri02@stud.fit.vutbr.cz</a> - 
+		Frontend(80%), Backend(10%) - Realizace hlavních stránek a komponent projektu, výběr designu, propojení hlavních modulů projektu, psaní dokumentace.
+	</dd>
+  <dd>Daniil Knaizkin <!-- Nahra�te skute�n�m jm�nem a e-mailem autora a popisem �innosti -->
+	    <a href="mailto:xkniaz00@stud.fit.vutbr.cz">xkniaz00@stud.fit.vutbr.cz</a> - 
+		Frontend(10%), Backend(45%) - logika backendu pro manipulace s Lektory a místnosti, testování, pomoc s vytvořením databazi a její naplnení. Psaní dokumentace. Mala pomoc s frontendem.
+	</dd>
+	<dt>URL aplikace</dt>
+	<p>Z časovych a technickych důvodu nestihli jsme umistit naš projekt na hostingu, doložíme odkáz emailem</p>
+</dl>
+
+<h2>Uživatelí systému pro testování</h2>
+<table>
+<tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
+<tr><td>xkrena</td><td>123456</td><td>Garant</td></tr>
+<tr><td>xpastu04</td><td>123</td><td>Garant</td></tr>
+<tr><td>xtomas</td><td>123456</td><td>Student</td></tr>
+<tr><td>xsmrck</td><td>123456</td><td>Lektor</td></tr>
+<tr><td>xburge</td><td>123456</td><td>Lektor</td></tr>
+</table>
+
+
+<h3>Video</h3>
+
+<p>Demonstrační video <a href="https://www.youtube.com/watch?v=d0DMi0rgWPA">https://www.youtube.com/watch?v=d0DMi0rgWPA</a></p>
+
+<h2>Implementace</h2>
+
+<h3>Backend</h3>
+implementaci serveru jsme provedli v jazyce Python a jako framework jsme zvolili Django pro vytvořeni REST API.<br>
+
+Client posílá dotazy na naš server, všechny cesty se nachazejí ve souboru main/urls.py, který následně volá funkce ze souboru views.py.<br>
+Funkce souboru views.py se volá funkcionalitu Django, který odesílá dotazy do databáze, manipuluje s daty a odesílá odpověď klientovi.<br>
+
+
+<h3>Frontend</h3>
+V tomto projektu byl frontend vytvořen v ReactJS s použitím preprocesoru Sass.
+
+Ve složce client/src je hlavní soubor App.js a soubor App.scss, který obsahuje hlavní styly pro hlavní stránku. Dále se zde nacházejí složky Components, Pages, Context, Services a Styles.<br>
+Složka Services obsahuje pouze CreateRequest.js kde se nachazí funkce pro vytvořeni dotázu na server<br>
+Složka Pages obsahují hlavní stránky<br>
+Ve složce Components se nachazejí různé moduly pro upravu uživatelů, kurzů a terminů. Taky tady jsou komponenty jako Footer, Navbar(Header), LoadingIcon.<br>
+
+<h2>Databáze</h2>
+
+<img src="databasa.png" alt="databáza" caption="databáza"/>
+
+<h2>Instalace</h2>
+
+Struční popis: 
+<ul>
+<li>softwarové požadavky node js v16.14.1 a vyšší, verze Pythonu 3.10 a vyšší, Django </li>
+<h4>Další používané technologie</h4>
+	<div>"bootstrap": "^5.2.3",</div>
+	<div>"react": "^18.2.0",</div>
+	<div>"react-bootstrap": "^2.6.0",</div>
+	<div>"react-dom": "^18.2.0",</div>
+	<div>"react-router-dom": "^6.4.3",</div>
+	<div>"react-scripts": "5.0.1",</div>
+	<div>"react-toastify": "^9.1.1",</div>
+	<div>"sass": "^1.56.1",</div>
+	<div>"web-vitals": "^2.1.4"</div>
+<li>konfigurovat databázi nemusíme, používame vzdálenou databaze na Google Cloud</li>
+</ul>
+<p>Při spouštění lokalního serveru používáme několik příkazů. <br>
+    Ve složce client <strong>npm install</strong> a pak <strong>npm start</strong></p>
+    <p>Ve složce server <strong>python manage.py runserver</strong></p>
+
+<h2>Známé problémy</h2>
+Z časových důvodů nebyla zavedena možnost schválení zápisu studentů do předmětu garantem.<br>
+Nebyli přidány žádné známky za předměty.<br>
+Limity nastavene pro terminy a kurzy nejsou funkční (user muze se prihlasit na naplneny kurz)<br>
+</body>
+</html>

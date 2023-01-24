@@ -1,0 +1,5 @@
+@use '../../Styles/_mixins' as mixins;
+
+.signInForm {
+    @include mixins.centeredThinForm()
+}

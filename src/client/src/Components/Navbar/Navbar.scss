@@ -1,0 +1,6 @@
+@use '../../Styles/_variables' as var;
+
+.navbar-container {
+    border-bottom: var.$border;
+    padding: 1em;
+}

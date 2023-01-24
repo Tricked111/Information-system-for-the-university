@@ -1,0 +1,5 @@
+@use '../../Styles/_variables' as var;
+
+.footer-container {
+    border-top: var.$border;
+}

@@ -1,0 +1,6 @@
+@mixin centeredThinForm($maxWidth: 350px,) {
+    max-width: $maxWidth;
+    text-align: start;
+    display: inline-block;
+    padding: 0 10px;
+}
